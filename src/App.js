@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Route, Routes} from 'react-router-dom'
+import Login from './Pages/Login';
+import Home from './Pages/Home';
+import Conference from './Pages/Conference';
+import Register from './Pages/Register';
+import Loading from './Componants/Loading';
+import { useGlobalState } from ".";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+    const [show, setLoading] = useGlobalState('loading')
+
+    return (
+        <BrowserRouter>
+        <div> 
+            <Loading show={show}/>
+            <Routes>       
+                <Route element={
+                    <Login />
+                } exact path="/" />
+                <Route element={
+                    <Home />
+                } exact path="/dashboard" />
+                <Route element={
+                    <Conference />
+                } exact path="/conference/:id/:name" />
+                <Route element={
+                    <Register />
+                } exact path="/register" />
+            </Routes>
+        </div>
+        </BrowserRouter>
+    )
 }
 
-export default App;
+export default App
